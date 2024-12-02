@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'providers/theme_provider.dart';
+import 'providers/cart_provider.dart';
 import 'screens/login_screen.dart';
 
 void main() async {
@@ -13,14 +14,17 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
       child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
+        builder: (context, themeProvider, _) {
           return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme:
-                themeProvider.isDarkMode ? ThemeData.dark() : ThemeData.light(),
+            themeMode: themeProvider.themeMode,
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
             home: LoginScreen(),
           );
         },
