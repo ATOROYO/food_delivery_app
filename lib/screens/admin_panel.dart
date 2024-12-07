@@ -5,33 +5,64 @@ class AdminPanel extends StatelessWidget {
   final CollectionReference foodItemsRef =
       FirebaseFirestore.instance.collection('food_items');
 
+  // Constructor with Key
+  AdminPanel({Key? key}) : super(key: key);
+
   void addFoodItem(BuildContext context) async {
-    await foodItemsRef.add({
-      'name': 'New Item',
-      'price': 10.0,
-      'imageUrl': '',
-    });
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Item added')));
+    try {
+      await foodItemsRef.add({
+        'name': 'New Item',
+        'price': 10.0,
+        'imageUrl': '',
+      });
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Item added successfully.')),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to add item: $e')),
+        );
+      }
+    }
   }
 
   void deleteFoodItem(String id, BuildContext context) async {
-    await foodItemsRef.doc(id).delete();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Item deleted')));
+    try {
+      await foodItemsRef.doc(id).delete();
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Item deleted successfully.')),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete item: $e')),
+        );
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Admin Panel')),
+      appBar: AppBar(
+        title: const Text('Admin Panel'),
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodItemsRef.snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.hasError)
-            return Center(child: Text('Error loading items'));
-          if (!snapshot.hasData)
-            return Center(child: CircularProgressIndicator());
+          if (snapshot.hasError) {
+            return const Center(child: Text('Error loading items.'));
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
           final items = snapshot.data!.docs;
 
@@ -42,10 +73,12 @@ class AdminPanel extends StatelessWidget {
               final data = item.data() as Map<String, dynamic>;
 
               return ListTile(
-                title: Text(data['name']),
-                subtitle: Text('\$${data['price']}'),
+                title: Text(data['name'] ?? 'Unnamed Item'),
+                subtitle: Text(data['price'] != null
+                    ? '\$${data['price']}'
+                    : 'No price available'),
                 trailing: IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () => deleteFoodItem(item.id, context),
                 ),
               );
@@ -55,7 +88,7 @@ class AdminPanel extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => addFoodItem(context),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -3,12 +3,12 @@ import '../screens/home_screen.dart';
 import '../screens/cart_screen.dart';
 import '../screens/order_history_screen.dart';
 
-class NavigationBar extends StatefulWidget {
+class CustomNavigationBar extends StatefulWidget {
   @override
   _NavigationBarState createState() => _NavigationBarState();
 }
 
-class _NavigationBarState extends State<NavigationBar> {
+class _NavigationBarState extends State<CustomNavigationBar> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [

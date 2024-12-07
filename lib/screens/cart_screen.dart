@@ -12,7 +12,9 @@ class CartScreen extends StatelessWidget {
 
     if (user == null || cartProvider.cartItems.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please log in or add items to the cart.')),
+        const SnackBar(
+            content:
+                Text('Please log in or add items to the cart.')), // const Text
       );
       return;
     }
@@ -36,13 +38,16 @@ class CartScreen extends StatelessWidget {
       cartProvider.clearCart();
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Order placed successfully!')),
+        const SnackBar(
+            content: Text('Order placed successfully!')), // const Text
       );
       Navigator.pop(context);
     } catch (e) {
       print(e);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to place the order. Try again later.')),
+        const SnackBar(
+            content: Text(
+                'Failed to place the order. Try again later.')), // const Text
       );
     }
   }
@@ -53,7 +58,7 @@ class CartScreen extends StatelessWidget {
     final cartItems = cartProvider.cartItems.values.toList();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Cart')),
+      appBar: AppBar(title: const Text('Cart')), // const Text
       body: Column(
         children: [
           Expanded(
@@ -80,11 +85,13 @@ class CartScreen extends StatelessWidget {
               children: [
                 Text(
                   'Total: \$${cartProvider.totalPrice.toStringAsFixed(2)}',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold), // const TextStyle
                 ),
                 ElevatedButton(
                   onPressed: () => placeOrder(context),
-                  child: Text('Place Order'),
+                  child: const Text('Place Order'), // const Text
                 ),
               ],
             ),
