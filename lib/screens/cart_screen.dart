@@ -3,19 +3,28 @@ import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 
-class CartScreen extends StatelessWidget {
-  Future<void> placeOrder(BuildContext context) async {
+class CartScreen extends StatefulWidget {
+  const CartScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  Future<void> placeOrder() async {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     final user = FirebaseAuth.instance.currentUser;
     final totalPrice = cartProvider.totalPrice;
 
     if (user == null || cartProvider.cartItems.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content:
-                Text('Please log in or add items to the cart.')), // const Text
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Please log in or add items to the cart.')),
+        );
+      }
       return;
     }
 
@@ -37,18 +46,20 @@ class CartScreen extends StatelessWidget {
 
       cartProvider.clearCart();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Order placed successfully!')), // const Text
-      );
-      Navigator.pop(context);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Order placed successfully!')),
+        );
+        Navigator.pop(context);
+      }
     } catch (e) {
-      print(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text(
-                'Failed to place the order. Try again later.')), // const Text
-      );
+      log('Error placing order: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Failed to place the order. Try again later.')),
+        );
+      }
     }
   }
 
@@ -58,7 +69,7 @@ class CartScreen extends StatelessWidget {
     final cartItems = cartProvider.cartItems.values.toList();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Cart')), // const Text
+      appBar: AppBar(title: const Text('Cart')),
       body: Column(
         children: [
           Expanded(
@@ -86,12 +97,11 @@ class CartScreen extends StatelessWidget {
                 Text(
                   'Total: \$${cartProvider.totalPrice.toStringAsFixed(2)}',
                   style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold), // const TextStyle
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton(
-                  onPressed: () => placeOrder(context),
-                  child: const Text('Place Order'), // const Text
+                  onPressed: placeOrder,
+                  child: const Text('Place Order'),
                 ),
               ],
             ),
