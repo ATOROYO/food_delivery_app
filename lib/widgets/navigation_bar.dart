@@ -4,6 +4,8 @@ import '../screens/cart_screen.dart';
 import '../screens/order_history_screen.dart';
 
 class CustomNavigationBar extends StatefulWidget {
+  const CustomNavigationBar({super.key});
+
   @override
   _NavigationBarState createState() => _NavigationBarState();
 }
@@ -13,7 +15,7 @@ class _NavigationBarState extends State<CustomNavigationBar> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    CartScreen(),
+    const CartScreen(),
     OrderHistoryScreen(),
   ];
 

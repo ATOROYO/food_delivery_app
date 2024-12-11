@@ -7,7 +7,7 @@ class HomeScreen extends StatelessWidget {
   final CollectionReference foodItemsRef =
       FirebaseFirestore.instance.collection('food_items');
 
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

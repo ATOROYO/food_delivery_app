@@ -6,7 +6,7 @@ import '../providers/cart_provider.dart';
 class FoodItemCard extends StatelessWidget {
   final FoodItem foodItem;
 
-  FoodItemCard({required this.foodItem});
+  const FoodItemCard({super.key, required this.foodItem});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class FoodItemCard extends StatelessWidget {
         title: Text(foodItem.name),
         subtitle: Text('\$${foodItem.price.toStringAsFixed(2)}'),
         trailing: IconButton(
-          icon: Icon(Icons.add_shopping_cart),
+          icon: const Icon(Icons.add_shopping_cart),
           onPressed: () => cartProvider.addItem(foodItem),
         ),
       ),

@@ -6,7 +6,7 @@ class AdminPanel extends StatelessWidget {
       FirebaseFirestore.instance.collection('food_items');
 
   // Constructor with Key
-  AdminPanel({Key? key}) : super(key: key);
+  AdminPanel({super.key});
 
   void addFoodItem(BuildContext context) async {
     try {

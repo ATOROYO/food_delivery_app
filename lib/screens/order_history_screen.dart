@@ -3,21 +3,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class OrderHistoryScreen extends StatelessWidget {
+  const OrderHistoryScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
       return Scaffold(
-        appBar: AppBar(title: Text('Order History')),
-        body: Center(
+        appBar: AppBar(title: const Text('Order History')),
+        body: const Center(
           child: Text('Please log in to view your order history.'),
         ),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Order History')),
+      appBar: AppBar(title: const Text('Order History')),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('orders')
@@ -26,10 +28,10 @@ class OrderHistoryScreen extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('No orders found.'));
+            return const Center(child: Text('No orders found.'));
           }
 
           final orders = snapshot.data!.docs;
@@ -48,7 +50,7 @@ class OrderHistoryScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Status: ${data['status']}'),
-                      Text('Items:'),
+                      const Text('Items:'),
                       ...List<Widget>.from(data['items'].map((item) {
                         return Text('- ${item['name']} x ${item['quantity']}');
                       })),
@@ -56,7 +58,7 @@ class OrderHistoryScreen extends StatelessWidget {
                   ),
                   trailing: Text(
                     '${(data['timestamp'] as Timestamp).toDate()}',
-                    style: TextStyle(fontSize: 12),
+                    style: const TextStyle(fontSize: 12),
                   ),
                 ),
               );
