@@ -7,16 +7,16 @@ class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({super.key});
 
   @override
-  _NavigationBarState createState() => _NavigationBarState();
+  NavigationBarState createState() => NavigationBarState();
 }
 
-class _NavigationBarState extends State<CustomNavigationBar> {
+class NavigationBarState extends State<CustomNavigationBar> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
     HomeScreen(),
     const CartScreen(),
-    OrderHistoryScreen(),
+    const OrderHistoryScreen(),
   ];
 
   void _onTabTapped(int index) {
