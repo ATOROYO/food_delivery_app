@@ -15,8 +15,8 @@ class NavigationBarState extends State<CustomNavigationBar> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    const CartScreen(),
-    const OrderHistoryScreen(),
+    CartScreen(),
+    OrderHistoryScreen(),
   ];
 
   void _onTabTapped(int index) {
@@ -46,6 +46,11 @@ class NavigationBarState extends State<CustomNavigationBar> {
             label: 'Orders',
           ),
         ],
+        selectedItemColor: Colors.blueAccent,
+        unselectedItemColor: Colors.grey,
+        backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        elevation: 10,
       ),
     );
   }
