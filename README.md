@@ -25,13 +25,13 @@ This is a **Flutter-based E-Commerce App** designed to provide a seamless online
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ATOROYO/food_delivery_app.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd <project-folder>
+   cd food_delivery_app
    ```
 
 3. Install dependencies:
