@@ -69,6 +69,8 @@ lib/
 |-- widgets/               # Reusable widgets (if any)
 |
 |-- models/                # Data models (e.g., cart items)
+|   |-- food_item.dart
+|   |-- order.dart
 ```
 
 ## Key Files
