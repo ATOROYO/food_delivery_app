@@ -134,7 +134,7 @@ dependencies:
 
 ## Screenshots
 
-Add relevant screenshots here for better understanding.
+Below are some of the screen shorts of the app
 
 ## Contributing
 
