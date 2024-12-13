@@ -61,12 +61,15 @@ lib/
 |   |-- cart_provider.dart
 |
 |-- screens/               # UI screens
+|   |-- admin_panel.dart
 |   |-- login_screen.dart
 |   |-- home_screen.dart
 |   |-- cart_screen.dart
 |   |-- order_history_screen.dart
 |
 |-- widgets/               # Reusable widgets (if any)
+|   |-- food_item_card.dart
+|   |-- navigation_bar.dart
 |
 |-- models/                # Data models (e.g., cart items)
 |   |-- food_item.dart
@@ -159,4 +162,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 For any questions or issues, feel free to contact:
 
 - **Author:** David Atoroyo Sika
-- **Email:** [Your Email Address]
+- **Email:** [davidatoroyosika@gmail.com]
