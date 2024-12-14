@@ -8,13 +8,19 @@ import 'screens/home_screen.dart';
 import 'screens/cart_screen.dart';
 import 'screens/order_history_screen.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Firebase.initializeApp();
-  } catch (e) {
-    debugPrint('Firebase initialization failed: $e');
-  }
+
+  // Firebase Initialization
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "YOUR_API_KEY",
+      appId: "YOUR_APP_ID",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      projectId: "food-delivery-app-474a1",
+    ),
+  );
+
   runApp(const MyApp());
 }
 
