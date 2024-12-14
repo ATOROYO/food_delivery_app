@@ -4,11 +4,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'providers/theme_provider.dart';
 import 'providers/cart_provider.dart';
 import 'screens/login_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/cart_screen.dart';
+import 'screens/order_history_screen.dart';
 
 void main() async {
-  // runApp(const MyApp());
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    debugPrint('Firebase initialization failed: $e');
+  }
   runApp(const MyApp());
 }
 
@@ -25,10 +31,28 @@ class MyApp extends StatelessWidget {
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false, // Disable debug banner
             themeMode: themeProvider.themeMode,
-            theme: ThemeData.light(),
-            darkTheme: ThemeData.dark(),
-            home: const LoginScreen(),
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              scaffoldBackgroundColor: Colors.white,
+              appBarTheme: const AppBarTheme(
+                backgroundColor: Colors.blueAccent,
+                foregroundColor: Colors.white,
+              ),
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              primarySwatch: Colors.blueGrey,
+              scaffoldBackgroundColor: Colors.black,
+            ),
+            initialRoute: '/login', // Initial route
+            routes: {
+              '/login': (context) => LoginScreen(),
+              '/home': (context) => HomeScreen(),
+              '/cart': (context) => CartScreen(),
+              '/orders': (context) => OrderHistoryScreen(),
+            },
           );
         },
       ),
