@@ -7,6 +7,7 @@ import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/cart_screen.dart';
 import 'screens/order_history_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,21 @@ Future<void> main() async {
   );
 
   runApp(const MyApp());
+}
+
+void testFirestoreConnection() async {
+  try {
+    final snapshot =
+        await FirebaseFirestore.instance.collection('food_items').get();
+    if (snapshot.docs.isNotEmpty) {
+      debugPrint(
+          'Firestore connection successful. Data found: ${snapshot.docs.length}');
+    } else {
+      debugPrint('Firestore connected but no data found.');
+    }
+  } catch (e) {
+    debugPrint('Error connecting to Firestore: $e');
+  }
 }
 
 class MyApp extends StatelessWidget {
