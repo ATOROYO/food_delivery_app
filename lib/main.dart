@@ -14,9 +14,9 @@ Future<void> main() async {
   // Firebase Initialization
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-      apiKey: "YOUR_API_KEY",
-      appId: "YOUR_APP_ID",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      apiKey: "AIzaSyBgBwMf5BBz3BIyn2aMb0eNoQ5dUFZS8P4",
+      appId: "1:608358143569:android:47c613c656cee300860a70",
+      messagingSenderId: "608358143569",
       projectId: "food-delivery-app-474a1",
     ),
   );
