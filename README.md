@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a **Flutter-based E-Commerce App** designed to provide a seamless online shopping experience. It includes essential features like user authentication, a shopping cart, order history, and more. The app is built using **Firebase** for backend services and **Provider** for state management.
+This is a **Flutter-based Food-Delivery App** designed to provide a seamless online shopping experience. It includes essential features like user authentication, a shopping cart, order history, and more. The app is built using **Firebase** for backend services and **Provider** for state management.
 
 ## Features
 
