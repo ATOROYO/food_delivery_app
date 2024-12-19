@@ -136,6 +136,10 @@ dependencies:
 
 Below are some of the screen shorts of the app
 
+### Login screen of the food delivery app
+
+![Login Screen](screenshots/loginscreen.png)
+
 ## Contributing
 
 Contributions are welcome! Please follow these steps:
