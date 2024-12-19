@@ -148,7 +148,7 @@ Below are some of the screen shorts of the app
 
 ### Login screen of the food delivery app
 
-![Login Screen](screenshots/loginscreen.png)
+![Login Screen](Screenshots/loginscreen.png)
 
 ## Contributing
 
