@@ -46,8 +46,18 @@ This is a **Flutter-based Food-Delivery App** designed to provide a seamless onl
    - Add `GoogleService-Info.plist` (for iOS) to the `ios/Runner` directory.
 
 5. Run the app:
+
    ```bash
    flutter run
+   ```
+
+6. Login in
+   To login into the app use the following details
+   ```json
+   {
+     "email": "vivi20@gmail.com",
+     "password": "vivi@2020"
+   }
    ```
 
 ## File Structure
