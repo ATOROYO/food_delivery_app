@@ -12,6 +12,19 @@ class CartProvider extends ChangeNotifier {
       .fold(0.0, (prev, next) => prev + next)
       .clamp(0.0, double.maxFinite);
 
+  // Remove the SharedPreferences import if not needed yet
+  // Keep these if you plan to implement persistence later:
+
+  Future<void> loadCart() async {
+    final prefs = await SharedPreferences.getInstance();
+    // Implement loading logic
+  }
+
+  Future<void> saveCart() async {
+    final prefs = await SharedPreferences.getInstance();
+    // Implement saving logic
+  }
+
   void addItem(FoodItem item) {
     if (item.quantity < 1) throw ArgumentError('Invalid quantity');
     if (item.price <= 0) throw ArgumentError('Invalid price');
