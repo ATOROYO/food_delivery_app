@@ -16,6 +16,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Food Delivery App'),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
+        elevation: 10,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodItemsRef.snapshots(),
