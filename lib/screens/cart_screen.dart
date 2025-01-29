@@ -69,39 +69,73 @@ class _CartScreenState extends State<CartScreen> {
     final cartItems = cartProvider.cartItems.values.toList();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Cart')),
+      appBar: AppBar(
+        title: const Text('Cart'),
+        backgroundColor: Colors.blueAccent,
+        elevation: 10,
+      ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
+              padding: const EdgeInsets.all(10),
               itemCount: cartItems.length,
               itemBuilder: (context, index) {
                 final item = cartItems[index];
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(item.imageUrl),
+                return Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  title: Text(item.name),
-                  subtitle: Text('Quantity: ${item.quantity}'),
-                  trailing: Text(
-                      '\$${(item.price * item.quantity).toStringAsFixed(2)}'),
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(item.imageUrl),
+                    ),
+                    title: Text(item.name),
+                    subtitle: Text('Quantity: ${item.quantity}'),
+                    trailing: Text(
+                        '\$${(item.price * item.quantity).toStringAsFixed(2)}'),
+                  ),
                 );
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.blue.shade400, Colors.blueAccent],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(20)),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Total: \$${cartProvider.totalPrice.toStringAsFixed(2)}',
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 ElevatedButton(
                   onPressed: placeOrder,
-                  child: const Text('Place Order'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: const Text(
+                    'Place Order',
+                    style: TextStyle(color: Colors.blueAccent, fontSize: 16),
+                  ),
                 ),
               ],
             ),
