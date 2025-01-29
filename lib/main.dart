@@ -9,18 +9,37 @@ import 'screens/cart_screen.dart';
 import 'screens/order_history_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+class RouteNames {
+  static const String login = '/login';
+  static const String home = '/home';
+  static const String cart = '/cart';
+  static const String orders = '/orders';
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Firebase Initialization
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyBgBwMf5BBz3BIyn2aMb0eNoQ5dUFZS8P4",
-      appId: "1:608358143569:android:47c613c656cee300860a70",
-      messagingSenderId: "608358143569",
-      projectId: "food-delivery-app-474a1",
-    ),
-  );
+  try {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyBgBwMf5BBz3BIyn2aMb0eNoQ5dUFZS8P4",
+        appId: "1:608358143569:android:47c613c656cee300860a70",
+        messagingSenderId: "608358143569",
+        projectId: "food-delivery-app-474a1",
+      ),
+    );
+  } catch (e) {
+    debugPrint('Error initializing Firebase: $e');
+  }
+
+  // Test Firestore connection
+  await testFirestoreConnection();
+
+  // Global error handling
+  FlutterError.onError = (FlutterErrorDetails details) {
+    debugPrint('Global error: ${details.exceptionAsString()}');
+  };
 
   runApp(const MyApp());
 }
@@ -53,7 +72,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
           return MaterialApp(
-            debugShowCheckedModeBanner: false, // Disable debug banner
+            debugShowCheckedModeBanner: false,
             themeMode: themeProvider.themeMode,
             theme: ThemeData(
               primarySwatch: Colors.blue,
@@ -62,18 +81,28 @@ class MyApp extends StatelessWidget {
                 backgroundColor: Colors.blueAccent,
                 foregroundColor: Colors.white,
               ),
+              fontFamily: 'Roboto',
+              buttonTheme: const ButtonThemeData(
+                buttonColor: Colors.blueAccent,
+                textTheme: ButtonTextTheme.primary,
+              ),
             ),
             darkTheme: ThemeData(
               brightness: Brightness.dark,
               primarySwatch: Colors.blueGrey,
               scaffoldBackgroundColor: Colors.black,
+              fontFamily: 'Roboto',
+              buttonTheme: const ButtonThemeData(
+                buttonColor: Colors.blueGrey,
+                textTheme: ButtonTextTheme.primary,
+              ),
             ),
-            initialRoute: '/login', // Initial route
+            initialRoute: RouteNames.login,
             routes: {
-              '/login': (context) => LoginScreen(),
-              '/home': (context) => HomeScreen(),
-              '/cart': (context) => CartScreen(),
-              '/orders': (context) => OrderHistoryScreen(),
+              RouteNames.login: (context) => LoginScreen(),
+              RouteNames.home: (context) => HomeScreen(),
+              RouteNames.cart: (context) => CartScreen(),
+              RouteNames.orders: (context) => OrderHistoryScreen(),
             },
           );
         },
