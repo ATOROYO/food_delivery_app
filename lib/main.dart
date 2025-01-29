@@ -34,7 +34,7 @@ Future<void> main() async {
   }
 
   // Test Firestore connection
-  await testFirestoreConnection();
+  testFirestoreConnection();
 
   // Global error handling
   FlutterError.onError = (FlutterErrorDetails details) {
