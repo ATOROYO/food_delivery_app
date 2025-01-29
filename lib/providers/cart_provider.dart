@@ -15,14 +15,24 @@ class CartProvider extends ChangeNotifier {
   // Remove the SharedPreferences import if not needed yet
   // Keep these if you plan to implement persistence later:
 
-  Future<void> loadCart() async {
-    final prefs = await SharedPreferences.getInstance();
-    // Implement loading logic
-  }
-
   Future<void> saveCart() async {
     final prefs = await SharedPreferences.getInstance();
-    // Implement saving logic
+    final cartJson = jsonEncode(_cartItems.values.toList());
+    await prefs.setString('cart', cartJson);
+  }
+
+  Future<void> loadCart() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cartJson = prefs.getString('cart');
+    if (cartJson != null) {
+      final List<dynamic> data = jsonDecode(cartJson);
+      _cartItems.clear();
+      for (var item in data) {
+        final foodItem = FoodItem.fromMap(item);
+        _cartItems[foodItem.id] = foodItem;
+      }
+      notifyListeners();
+    }
   }
 
   void addItem(FoodItem item) {
