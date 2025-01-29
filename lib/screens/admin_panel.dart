@@ -5,7 +5,6 @@ class AdminPanel extends StatelessWidget {
   final CollectionReference foodItemsRef =
       FirebaseFirestore.instance.collection('food_items');
 
-  // Constructor with Key
   AdminPanel({super.key});
 
   void addFoodItem(BuildContext context) async {
@@ -53,6 +52,8 @@ class AdminPanel extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Panel'),
+        backgroundColor: Colors.blueAccent,
+        elevation: 10,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodItemsRef.snapshots(),
@@ -67,19 +68,32 @@ class AdminPanel extends StatelessWidget {
           final items = snapshot.data!.docs;
 
           return ListView.builder(
+            padding: const EdgeInsets.all(10),
             itemCount: items.length,
             itemBuilder: (context, index) {
               final item = items[index];
               final data = item.data() as Map<String, dynamic>;
 
-              return ListTile(
-                title: Text(data['name'] ?? 'Unnamed Item'),
-                subtitle: Text(data['price'] != null
-                    ? '\$${data['price']}'
-                    : 'No price available'),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () => deleteFoodItem(item.id, context),
+              return Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                child: ListTile(
+                  title: Text(
+                    data['name'] ?? 'Unnamed Item',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    data['price'] != null
+                        ? '\$${data['price']}'
+                        : 'No price available',
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () => deleteFoodItem(item.id, context),
+                  ),
                 ),
               );
             },
@@ -88,7 +102,8 @@ class AdminPanel extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => addFoodItem(context),
-        child: const Icon(Icons.add),
+        backgroundColor: Colors.blueAccent,
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
