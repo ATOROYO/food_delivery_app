@@ -14,9 +14,9 @@ class NavigationBarState extends State<CustomNavigationBar> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const HomeScreen(),
-    const CartScreen(),
-    const OrderHistoryScreen(),
+    HomeScreen(),
+    CartScreen(),
+    OrderHistoryScreen(),
   ];
 
   void _onTabTapped(int index) {
