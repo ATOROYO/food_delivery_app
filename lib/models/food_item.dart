@@ -3,35 +3,53 @@ class FoodItem {
   final String name;
   final double price;
   final String imageUrl;
-  final String description; // Added description
-  final String category; // Added category
-  int quantity;
+  final String description;
+  final String category;
+  final int quantity;
 
   FoodItem({
     required this.id,
     required this.name,
     required this.price,
     required this.imageUrl,
-    this.description = '', // Default empty description
-    this.category = '', // Default empty category
-    this.quantity = 1, // Default quantity is 1
+    this.description = '',
+    this.category = '',
+    this.quantity = 1,
   });
 
-  // Factory constructor to create a FoodItem from Firestore data
+  // Add this copyWith method
+  FoodItem copyWith({
+    String? id,
+    String? name,
+    double? price,
+    String? imageUrl,
+    String? description,
+    String? category,
+    int? quantity,
+  }) {
+    return FoodItem(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      imageUrl: imageUrl ?? this.imageUrl,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      quantity: quantity ?? this.quantity,
+    );
+  }
+
+  // Rest of your existing code...
   factory FoodItem.fromMap(Map<String, dynamic> data, String id) {
     return FoodItem(
       id: id,
-      name:
-          data['name'] ?? 'Unknown', // Fallback to 'Unknown' if name is missing
-      price:
-          (data['price'] as num?)?.toDouble() ?? 0.0, // Ensure price is double
+      name: data['name'] ?? 'Unknown',
+      price: (data['price'] as num?)?.toDouble() ?? 0.0,
       imageUrl: data['imageUrl'] ?? '',
       description: data['description'] ?? '',
       category: data['category'] ?? '',
     );
   }
 
-  // Convert FoodItem to a map for Firestore
   Map<String, dynamic> toMap() {
     return {
       'name': name,
