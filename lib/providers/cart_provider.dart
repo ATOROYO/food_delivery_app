@@ -1,29 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/food_item.dart';
 
 class CartProvider extends ChangeNotifier {
   final Map<String, FoodItem> _cartItems = {};
 
-  Map<String, FoodItem> get cartItems => _cartItems;
+  Map<String, FoodItem> get cartItems => Map.unmodifiable(_cartItems);
 
   double get totalPrice => _cartItems.values
       .map((item) => item.price * item.quantity)
-      .fold(0.0, (prev, next) => prev + next);
+      .fold(0.0, (prev, next) => prev + next)
+      .clamp(0.0, double.maxFinite);
 
   void addItem(FoodItem item) {
-    if (_cartItems.containsKey(item.id)) {
-      _cartItems[item.id]!.quantity++;
-    } else {
-      _cartItems[item.id] = item;
-    }
+    if (item.quantity < 1) throw ArgumentError('Invalid quantity');
+    if (item.price <= 0) throw ArgumentError('Invalid price');
+
+    _cartItems.update(
+      item.id,
+      (existing) => existing.copyWith(quantity: existing.quantity + 1),
+      ifAbsent: () => item.copyWith(quantity: 1),
+    );
     notifyListeners();
   }
 
   void removeItem(String id) {
-    if (_cartItems.containsKey(id)) {
-      _cartItems.remove(id);
-      notifyListeners();
+    _cartItems.remove(id);
+    notifyListeners();
+  }
+
+  void incrementQuantity(String itemId) {
+    _cartItems.update(
+      itemId,
+      (item) => item.copyWith(quantity: item.quantity + 1),
+    );
+    notifyListeners();
+  }
+
+  void decrementQuantity(String itemId) {
+    final item = _cartItems[itemId]!;
+    if (item.quantity > 1) {
+      _cartItems[itemId] = item.copyWith(quantity: item.quantity - 1);
+    } else {
+      _cartItems.remove(itemId);
     }
+    notifyListeners();
   }
 
   void clearCart() {
